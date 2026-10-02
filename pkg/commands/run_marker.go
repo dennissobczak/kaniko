@@ -19,6 +19,7 @@ package commands
 import (
 	"os"
 
+	kConfig "github.com/GoogleContainerTools/kaniko/pkg/config"
 	"github.com/GoogleContainerTools/kaniko/pkg/dockerfile"
 	"github.com/GoogleContainerTools/kaniko/pkg/util"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
@@ -31,13 +32,14 @@ type RunMarkerCommand struct {
 	cmd      *instructions.RunCommand
 	Files    []string
 	shdCache bool
+	secrets  kConfig.Secrets
 }
 
 func (r *RunMarkerCommand) ExecuteCommand(config *v1.Config, buildArgs *dockerfile.BuildArgs) error {
 	// run command `touch filemarker`
 	logrus.Debugf("Using new RunMarker command")
 	prevFilesMap, _ := util.GetFSInfoMap("/", map[string]os.FileInfo{})
-	if err := runCommandInExec(config, buildArgs, r.cmd); err != nil {
+	if err := runCommandInExec(config, buildArgs, r.cmd, r.secrets); err != nil {
 		return err
 	}
 	_, r.Files = util.GetFSInfoMap("/", prevFilesMap)

@@ -37,6 +37,7 @@ type RunCommand struct {
 	BaseCommand
 	cmd      *instructions.RunCommand
 	shdCache bool
+	secrets  kConfig.Secrets
 }
 
 // for testing
@@ -49,10 +50,10 @@ func (r *RunCommand) IsArgsEnvsRequiredInCache() bool {
 }
 
 func (r *RunCommand) ExecuteCommand(config *v1.Config, buildArgs *dockerfile.BuildArgs) error {
-	return runCommandInExec(config, buildArgs, r.cmd)
+	return runCommandInExec(config, buildArgs, r.cmd, r.secrets)
 }
 
-func runCommandInExec(config *v1.Config, buildArgs *dockerfile.BuildArgs, cmdRun *instructions.RunCommand) error {
+func runCommandInExec(config *v1.Config, buildArgs *dockerfile.BuildArgs, cmdRun *instructions.RunCommand, secrets kConfig.Secrets) (err error) {
 	var newCommand []string
 	if cmdRun.PrependShell {
 		// This is the default shell on Linux
@@ -114,7 +115,21 @@ func runCommandInExec(config *v1.Config, buildArgs *dockerfile.BuildArgs, cmdRun
 		return errors.Wrap(err, "adding default HOME variable")
 	}
 
-	cmd.Env = env
+	secretEnv, cleanupSecrets, err := mountSecrets(cmdRun, secrets, config.WorkingDir, replacementEnvs)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if cerr := cleanupSecrets(); cerr != nil {
+			if err == nil {
+				err = errors.Wrap(cerr, "removing secrets")
+			} else {
+				logrus.Errorf("Removing secrets: %v", cerr)
+			}
+		}
+	}()
+
+	cmd.Env = append(env, secretEnv...)
 
 	logrus.Infof("Running: %s", cmd.Args)
 	if err := cmd.Start(); err != nil {

@@ -57,6 +57,7 @@ type KanikoOptions struct {
 	Labels                   multiArg
 	Git                      KanikoGitOptions
 	IgnorePaths              multiArg
+	Secrets                  Secrets
 	DockerfilePath           string
 	SrcContext               string
 	SnapshotMode             string

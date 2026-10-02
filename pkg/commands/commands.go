@@ -17,6 +17,7 @@ limitations under the License.
 package commands
 
 import (
+	kConfig "github.com/GoogleContainerTools/kaniko/pkg/config"
 	"github.com/GoogleContainerTools/kaniko/pkg/dockerfile"
 	"github.com/GoogleContainerTools/kaniko/pkg/util"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
@@ -64,13 +65,13 @@ type DockerCommand interface {
 	IsArgsEnvsRequiredInCache() bool
 }
 
-func GetCommand(cmd instructions.Command, fileContext util.FileContext, useNewRun bool, cacheCopy bool, cacheRun bool) (DockerCommand, error) {
+func GetCommand(cmd instructions.Command, fileContext util.FileContext, useNewRun bool, cacheCopy bool, cacheRun bool, secrets kConfig.Secrets) (DockerCommand, error) {
 	switch c := cmd.(type) {
 	case *instructions.RunCommand:
 		if useNewRun {
-			return &RunMarkerCommand{cmd: c, shdCache: cacheRun}, nil
+			return &RunMarkerCommand{cmd: c, shdCache: cacheRun, secrets: secrets}, nil
 		}
-		return &RunCommand{cmd: c, shdCache: cacheRun}, nil
+		return &RunCommand{cmd: c, shdCache: cacheRun, secrets: secrets}, nil
 	case *instructions.CopyCommand:
 		return &CopyCommand{cmd: c, fileContext: fileContext, shdCache: cacheCopy}, nil
 	case *instructions.ExposeCommand:
