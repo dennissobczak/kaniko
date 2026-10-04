@@ -100,14 +100,14 @@ k8s-executor-build-push:
 .PHONY: images
 images: DOCKER_BUILDKIT=1
 images:
-	docker build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/executor:latest -f deploy/Dockerfile --target kaniko-executor .
-	docker build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/executor:debug -f deploy/Dockerfile --target kaniko-debug .
-	docker build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/executor:slim -f deploy/Dockerfile --target kaniko-slim .
-	docker build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/warmer:latest -f deploy/Dockerfile --target kaniko-warmer .
+	podman build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/executor:latest -f deploy/Dockerfile --target kaniko-executor .
+	podman build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/executor:debug -f deploy/Dockerfile --target kaniko-debug .
+	podman build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/executor:slim -f deploy/Dockerfile --target kaniko-slim .
+	podman build ${BUILD_ARG} --build-arg=TARGETARCH=$(GOARCH) --build-arg=TARGETOS=linux -t $(REGISTRY)/warmer:latest -f deploy/Dockerfile --target kaniko-warmer .
 
 .PHONY: push
 push:
-	docker push $(REGISTRY)/executor:latest
-	docker push $(REGISTRY)/executor:debug
-	docker push $(REGISTRY)/executor:slim
-	docker push $(REGISTRY)/warmer:latest
+	podman push $(REGISTRY)/executor:latest
+	podman push $(REGISTRY)/executor:debug
+	podman push $(REGISTRY)/executor:slim
+	podman push $(REGISTRY)/warmer:latest
