@@ -1,14 +1,12 @@
-# 🧊 This project is archived and no longer developed or maintained. 🧊
+# 🔥 This project is forked and revived. 🔥
 
-The code remains available for historic purposes.
+The README is updated.
 
-The README as of the archival date remains unchanged below for historic purposes.
+The original Kaniko project can be found at [GoogleContainerTools - Kaniko](https://github.com/googlecontainertools/kaniko)
 
 -----
 
 # kaniko - Build Images In Kubernetes
-
-## 🚨NOTE: kaniko is not an officially supported Google product🚨
 
 [![Unit tests](https://github.com/GoogleContainerTools/kaniko/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/GoogleContainerTools/kaniko/actions/workflows/unit-tests.yaml)
 [![Integration tests](https://github.com/GoogleContainerTools/kaniko/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/GoogleContainerTools/kaniko/actions/workflows/integration-tests.yaml)
@@ -28,14 +26,6 @@ standard Kubernetes cluster.
 kaniko is meant to be run as an image: `gcr.io/kaniko-project/executor`. We do
 **not** recommend running the kaniko executor binary in another image, as it
 might not work as you expect - see [Known Issues](#known-issues).
-
-We'd love to hear from you! Join us on
-[#kaniko Kubernetes Slack](https://kubernetes.slack.com/messages/CQDCHGX7Y/)
-
-:mega: **Please fill out our
-[quick 5-question survey](https://forms.gle/HhZGEM33x4FUz9Qa6)** so that we can
-learn how satisfied you are with kaniko, and what improvements we should make.
-Thank you! :dancers:
 
 _If you are interested in contributing to kaniko, see
 [DEVELOPMENT.md](DEVELOPMENT.md) and [CONTRIBUTING.md](CONTRIBUTING.md)._
@@ -144,8 +134,8 @@ _If you are interested in contributing to kaniko, see
 
 ## Community
 
-We'd love to hear from you! Join
-[#kaniko on Kubernetes Slack](https://kubernetes.slack.com/messages/CQDCHGX7Y/)
+I'd love to hear from you! Join
+[#kaniko on Whatsapp](TODO)
 
 ## How does kaniko work?
 
