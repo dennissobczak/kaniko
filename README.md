@@ -1,6 +1,6 @@
 # 🔥 This project is forked and revived. 🔥
 
-The README is updated.
+The README is still subject to updates.
 
 The original Kaniko project can be found at [GoogleContainerTools - Kaniko](https://github.com/googlecontainertools/kaniko)
 
